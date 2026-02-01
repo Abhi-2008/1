@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Valentine for Riya</title>
+    <style>
+        :root {
+            --primary-pink: #ff4d6d;
+            --bg-color: #fff0f3;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: var(--bg-color);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden; /* Prevents scrolling on mobile */
+            touch-action: none; /* Prevents zooming when tapping fast */
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 85%;
+            max-width: 320px;
+            border: 2px solid #ffb3c1;
+            z-index: 10;
+        }
+
+        .cat-icon { font-size: 3rem; margin-bottom: 10px; }
+        h1 { color: #c9184a; font-size: 1.5rem; }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+            min-height: 60px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        #yesBtn { background-color: var(--primary-pink); color: white; position: relative; }
+        
+        #noBtn { 
+            background-color: #a4133c; 
+            color: white; 
+            position: relative; 
+            z-index: 100;
+        }
+
+        #message { margin-top: 15px; color: #ff758f; font-style: italic; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="cat-icon" id="icon">🐱❤️</div>
+  <h1>Riya, will you be my Valentine?</h1>
+  <div class="button-container">
+    <button id="yesBtn" onclick="celebrate()">Yes</button>
+    <button id="noBtn">No</button>
+  </div>
+  <p id="message">"No" seems a bit shy 😉</p>
+</div>
+
+<script>
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const message = document.getElementById('message');
+    const icon = document.getElementById('icon');
+    
+    let yesSize = 1;
+
+    const moveButton = (e) => {
+        // Prevent clicking on touch devices
+        if (e) e.preventDefault();
+
+        // Calculate random position within screen bounds
+        const padding = 20;
+        const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+        const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+        const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+        const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+
+        noBtn.style.position = 'fixed';
+        noBtn.style.left = randomX + 'px';
+        noBtn.style.top = randomY + 'px';
+
+        // Make the "Yes" button grow every time "No" is dodged
+        yesSize += 0.15;
+        yesBtn.style.transform = `scale(${yesSize})`;
+    };
+
+    // Desktop hover
+    noBtn.addEventListener('mouseover', moveButton);
+    // Mobile touch
+    noBtn.addEventListener('touchstart', moveButton);
+
+    function celebrate() {
+        message.innerHTML = "Yay! Best Valentine ever! 🐾💖";
+        icon.innerHTML = "😻✨";
+        noBtn.style.display = 'none';
+        yesBtn.style.transform = "scale(1.8)";
+        document.body.style.backgroundColor = "#ffb3c1";
+    }
+</script>
+
+</body>
+</html>
